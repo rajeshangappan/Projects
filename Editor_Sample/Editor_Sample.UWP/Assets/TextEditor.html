@@ -1,0 +1,49 @@
+﻿<html>
+<body>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 80%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+            height: 35px;
+        }
+    </style>
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <fieldset>
+        <button class='fontStyle' onclick="document.execCommand('italic',false,null);" title='Italicize Highlighted Text'>
+            <i>I</i>
+        </button>
+        <button class='fontStyle' onclick="document.execCommand('bold',false,null);" title='Bold Highlighted Text'>
+            <b>B</b>
+        </button>
+        <button class='fontStyle' onclick="document.execCommand('underline',false,null);">
+            <u>U</u>
+        </button>
+    </fieldset>
+    <div id='textEditor' contenteditable=true onfocus="OnEditorFocus(this)"><p><br></p></div>
+    <script type="text/javascript">
+        function printMultiplicationTable(num, stop) {
+            var number = parseInt(num);
+            var stopNumber = parseInt(stop);
+
+            $('#multiplicationtable').empty();
+            for (var index = 1; index <= stopNumber; index++) {
+                $('#multiplicationtable').append(number + ' x ' + index + " = " + number * index + '<br/>');
+            }
+        }
+        function addHTML(html) {
+            var ele = document.getElementById('textEditor');
+            ele.innerHTML = ele.innerHTML + html;
+        }
+        function OnEditorFocus(editor) {
+            
+        }
+    </script>
+</body>
+</html>

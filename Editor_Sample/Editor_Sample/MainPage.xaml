@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Editor_Sample.MainPage" xmlns:richtexteditor="clr-namespace:Syncfusion.XForms.RichTextEditor;assembly=Syncfusion.SfRichTextEditor.XForms" xmlns:renderer="clr-namespace:Editor_Sample.Renderer">
+    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+        <Frame CornerRadius="10"  
+       OutlineColor="Red" 
+       Padding="0">
+            <StackLayout>
+                <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" WidthRequest="500">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="800"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <StackLayout Orientation="Horizontal" Grid.Row="0" HeightRequest="40">
+                        <Button Text="Pick image" Command="{Binding PickImageCommand}" HorizontalOptions="FillAndExpand" />
+                        <Button Text="Upload Excel" Command="{Binding PickFileCommand}" HorizontalOptions="FillAndExpand" />
+                        <Button Text="Create Table" Command="{Binding CreateTableCommand}" HorizontalOptions="FillAndExpand" />
+                    </StackLayout>
+                    <renderer:HybridWebView x:Name="_webView" HorizontalOptions="Fill" EvaluateJavascript="{Binding EvaluateJavascript, Mode=OneWayToSource}"
+                                    EvalHTMLJavascript="{Binding EvalHTMLJavascript}" Grid.Row="1"
+                                    VerticalOptions="FillAndExpand" WidthRequest="600" HeightRequest="600">
+                        <WebView.Source>
+                            <HtmlWebViewSource Html="{Binding RTFContent}" />
+                        </WebView.Source>
+                    </renderer:HybridWebView>
+                </Grid>
+            </StackLayout>
+        </Frame>
+       
+    </StackLayout>
+</ContentPage>
