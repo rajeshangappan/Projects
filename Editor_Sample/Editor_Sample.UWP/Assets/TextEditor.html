@@ -13,6 +13,11 @@
             padding: 8px;
             height: 35px;
         }
+        #textEditor {
+            height: 100%;
+            outline: none !important;
+            padding: 10px;
+        }
     </style>
     <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
     <fieldset>
@@ -25,8 +30,16 @@
         <button class='fontStyle' onclick="document.execCommand('underline',false,null);">
             <u>U</u>
         </button>
+        <button class='fontStyle' onclick="document.execCommand('insertOrderedList',false,null);">
+            Num
+        </button>
+        <button class='fontStyle' onclick="document.execCommand('insertUnorderedList',false,null);">
+            Bullet
+        </button>
     </fieldset>
-    <div id='textEditor' contenteditable=true onfocus="OnEditorFocus(this)"><p><br></p></div>
+    <div id='editorparent'>
+        <div id='textEditor' contenteditable=true onfocus="OnEditorFocus(this)"><p><br></p></div>
+    </div>
     <script type="text/javascript">
         function printMultiplicationTable(num, stop) {
             var number = parseInt(num);

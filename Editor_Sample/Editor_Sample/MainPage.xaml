@@ -6,28 +6,26 @@
         <Frame CornerRadius="10"  
        OutlineColor="Red" 
        Padding="0">
-            <StackLayout>
-                <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" WidthRequest="500">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"></RowDefinition>
-                        <RowDefinition Height="800"></RowDefinition>
-                    </Grid.RowDefinitions>
+            <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" WidthRequest="500">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                </Grid.RowDefinitions>
 
-                    <StackLayout Orientation="Horizontal" Grid.Row="0" HeightRequest="40">
-                        <Button Text="Pick image" Command="{Binding PickImageCommand}" HorizontalOptions="FillAndExpand" />
-                        <Button Text="Upload Excel" Command="{Binding PickFileCommand}" HorizontalOptions="FillAndExpand" />
-                        <Button Text="Create Table" Command="{Binding CreateTableCommand}" HorizontalOptions="FillAndExpand" />
-                    </StackLayout>
-                    <renderer:HybridWebView x:Name="_webView" HorizontalOptions="Fill" EvaluateJavascript="{Binding EvaluateJavascript, Mode=OneWayToSource}"
+                <StackLayout Orientation="Horizontal" Grid.Row="0" HeightRequest="40">
+                    <Button Text="Pick image" Command="{Binding PickImageCommand}" HorizontalOptions="FillAndExpand" />
+                    <Button Text="Upload Excel" Command="{Binding PickFileCommand}" HorizontalOptions="FillAndExpand" />
+                    <Button Text="Create Table" Command="{Binding CreateTableCommand}" HorizontalOptions="FillAndExpand" />
+                </StackLayout>
+                <renderer:HybridWebView x:Name="_webView" HorizontalOptions="Fill" EvaluateJavascript="{Binding EvaluateJavascript, Mode=OneWayToSource}"
                                     EvalHTMLJavascript="{Binding EvalHTMLJavascript}" Grid.Row="1"
                                     VerticalOptions="FillAndExpand" WidthRequest="600" HeightRequest="600">
-                        <WebView.Source>
-                            <HtmlWebViewSource Html="{Binding RTFContent}" />
-                        </WebView.Source>
-                    </renderer:HybridWebView>
-                </Grid>
-            </StackLayout>
+                    <WebView.Source>
+                        <HtmlWebViewSource Html="{Binding RTFContent}" />
+                    </WebView.Source>
+                </renderer:HybridWebView>
+            </Grid>
         </Frame>
-       
+
     </StackLayout>
 </ContentPage>
