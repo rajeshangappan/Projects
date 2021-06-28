@@ -13,10 +13,18 @@
             padding: 8px;
             height: 35px;
         }
+
         #textEditor {
             height: 100%;
             outline: none !important;
             padding: 10px;
+        }
+
+        p, div, body, html {
+            display: block;
+        }
+        p, div {
+            word-break: break-all;
         }
     </style>
     <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
@@ -55,7 +63,7 @@
             ele.innerHTML = ele.innerHTML + html;
         }
         function OnEditorFocus(editor) {
-            
+
         }
     </script>
 </body>

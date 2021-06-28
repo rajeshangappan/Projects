@@ -27,17 +27,11 @@ namespace Editor_Sample.UWP.Renderer
             {
                 _hybridWebView = webView;
                 _hybridWebView.PropertyChanged += _hybridWebView_PropertyChanged;
-                //webView.EvaluateJavascript = async (js) =>
-                //{
-                //    js = "printMultiplicationTable(2,3)";
-                //    return await Control.InvokeScriptAsync("eval", new[] { js });
-                //    // webView.Eval(js);
-                //    //return "";
-                //};
+                webView.EvaluateJavascript = async (js) =>
+                {
+                    return await Control.InvokeScriptAsync("eval", new[] { js });
+                };
             }
-
-
-
         }
 
         private void _hybridWebView_PropertyChanged(object sender, PropertyChangedEventArgs e)

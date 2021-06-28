@@ -28,6 +28,7 @@ namespace Editor_Sample
             PickFileCommand = new Command(() => DoPickFile());
             PickImageCommand = new Command(() => DoPickImage());
             CreateTableCommand = new Command(() => CreateTable());
+            ExportToRTFCommand = new Command(() => ExportToRTF());
             var task = Task.Run(async () => await ReadFile());
         }
 
@@ -38,6 +39,8 @@ namespace Editor_Sample
         public ICommand PickImageCommand { get; }
 
         public ICommand CreateTableCommand { get; }
+
+        public ICommand ExportToRTFCommand { get; }
 
         public string Text
         {
@@ -129,6 +132,14 @@ namespace Editor_Sample
             //var result1 = await EvaluateJavascript("printMultiplicationTable()");
         }
 
+        async void ExportToRTF()
+        {
+            var result1 = await EvaluateJavascript("document.body.innerHTML");
+        }
+
+
+        #region Helper
+
         private void CreateTable()
         {
             int row = 6;
@@ -137,9 +148,6 @@ namespace Editor_Sample
             var tt = $"addHTML(" + "'" + tablestring + "')"; ;
             EvalHTMLJavascript = tt;
         }
-
-        #region Helper
-
         async Task<bool> AppendImage(FileResult result)
         {
             var stream = await result.OpenReadAsync();

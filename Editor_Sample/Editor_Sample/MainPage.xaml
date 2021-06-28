@@ -16,6 +16,7 @@
                     <Button Text="Pick image" Command="{Binding PickImageCommand}" HorizontalOptions="FillAndExpand" />
                     <Button Text="Upload Excel" Command="{Binding PickFileCommand}" HorizontalOptions="FillAndExpand" />
                     <Button Text="Create Table" Command="{Binding CreateTableCommand}" HorizontalOptions="FillAndExpand" />
+                    <Button Text="Export" Command="{Binding ExportToRTFCommand}" HorizontalOptions="FillAndExpand" />
                 </StackLayout>
                 <renderer:HybridWebView x:Name="_webView" HorizontalOptions="Fill" EvaluateJavascript="{Binding EvaluateJavascript, Mode=OneWayToSource}"
                                     EvalHTMLJavascript="{Binding EvalHTMLJavascript}" Grid.Row="1"
@@ -26,6 +27,5 @@
                 </renderer:HybridWebView>
             </Grid>
         </Frame>
-
     </StackLayout>
 </ContentPage>
