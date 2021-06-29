@@ -23,11 +23,88 @@
         p, div, body, html {
             display: block;
         }
+
         p, div {
             word-break: break-all;
         }
+
+        .popupcontent {
+            background-color: #fff;
+            color: rgba(0,0,0,0.87);
+            border-color: #e0e0e0;
+            width: 200px;
+        }
+
+        .parentpoup {
+            display: none;
+            position: absolute;
+        }
+
+        .p-list-li {
+            display: flex;
+            height: 36px;
+            line-height: 36px;
+            padding: 0 16px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: normal;
+            list-style-image: none;
+            list-style-position: outside;
+            list-style-type: none;
+            user-select: none;
+            white-space: nowrap;
+        }
+
+        .p-content {
+            position: absolute;
+            background-color: #fff;
+        }
+
+        .dropdown-popup {
+            border: none;
+            border-radius: 0;
+            box-shadow: 0 5px 5px -3px rgb(0 0 0 / 20%), 0 8px 10px 1px rgb(0 0 0 / 14%), 0 3px 14px 2px rgb(0 0 0 / 12%);
+            box-sizing: border-box;
+            font-size: 14px;
+            font-weight: normal;
+            list-style-image: none;
+            list-style-position: outside;
+            list-style-type: none;
+            margin: 0;
+            min-width: 120px;
+            overflow: hidden;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            padding-left: 0;
+            user-select: none;
+            white-space: nowrap;
+            padding: 0px;
+        }
+
+        .p-list-li:hover {
+            background-color: #e0e0e0;
+            color: rgba(0,0,0,0.87);
+        }
     </style>
     <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <div class='erpopupcontent p-content edit-popup' style='display:none'>
+        <ul class="no-bullets dropdown-popup">
+            <li class='p-list-li p-row-before'>Insert Row Before</li>
+            <li class='p-list-li p-row-after'>Insert Row After</li>
+            <li class='p-list-li p-row-delete'>Delete Row</li>
+        </ul>
+    </div>
+    <div class='ecpopupcontent p-content edit-popup' style='display:none'>
+        <ul class="no-bullets">
+            <li class="p-list-li p-col-before">Insert Column Before</li>
+            <li class='p-list-li p-col-after'>Insert Column After</li>
+            <li class='p-list-li p-col-delete'>Delete Column</li>
+        </ul>
+    </div>
+    <div class="parentpoup edit-popup">
+        <button class="erpopup">Edit Row</button>
+        <button class="ecpopup">Edit col</button>
+    </div>
     <fieldset>
         <button class='fontStyle' onclick="document.execCommand('italic',false,null);" title='Italicize Highlighted Text'>
             <i>I</i>
@@ -64,6 +141,97 @@
         }
         function OnEditorFocus(editor) {
 
+        }
+        document.body.addEventListener('click', function (evt) {
+            if (evt.target.nodeName.toLowerCase() === 'td') {
+                HidePopup();
+                $('.selected-td').removeClass('selected-td');
+                var popup = document.getElementsByClassName('parentpoup')[0];
+                popup.style.display = 'block';
+                $(evt.target).addClass('selected-td');
+                var table = $(evt.target).closest('table');
+                popup.style.top = (evt.target.offsetTop + evt.target.offsetHeight) + table[0].offsetTop + 10;
+                popup.style.left = evt.target.offsetLeft + table[0].offsetLeft + 20;
+            }
+            else if (evt.target.classList.contains('erpopup')) {
+                var popup = document.getElementsByClassName('erpopupcontent')[0];
+                popup.style.display = 'block';
+                popup.style.top = evt.target.parentElement.offsetTop + 20;
+                popup.style.left = evt.target.parentElement.offsetLeft;
+            }
+            else if (evt.target.classList.contains('ecpopup')) {
+                var popup = document.getElementsByClassName('ecpopupcontent')[0];
+                popup.style.display = 'block';
+                popup.style.top = evt.target.parentElement.offsetTop + 20;
+                popup.style.left = evt.target.parentElement.offsetLeft;
+            }
+            else if (evt.target.classList.contains('p-list-li')) {
+                if (evt.target.classList.contains('p-row-before')) {
+                    var td = $('.selected-td')[0];
+                    var tr = td.parentElement;
+                    var tff = createTD(tr);
+                    $(tr).before(tff);
+                }
+                if (evt.target.classList.contains('p-row-after')) {
+                    var td = $('.selected-td')[0];
+                    var tr = td.parentElement;
+                    var tff = createTD(tr);
+                    $(tr).after(tff);
+                }
+                if (evt.target.classList.contains('p-row-delete')) {
+                    var td = $('.selected-td')[0];
+                    var tr = td.parentElement;
+                    $(tr).remove();
+                }
+                if (evt.target.classList.contains('p-col-delete')) {  
+                    var td = $('.selected-td')[0];
+                    var row = td.parentElement;
+                    var index = Array.prototype.indexOf.call(row.cells, td);;
+                    var tr = td.closest('table').rows;                    
+                    for (var j = 0; j < tr.length; j++) {
+                        tr[j].deleteCell(index);
+                    }
+                }
+                if (evt.target.classList.contains('p-col-after') || evt.target.classList.contains('p-col-before')) {
+                    var isafter = evt.target.classList.contains('p-col-after');
+                    var td = $('.selected-td')[0];
+                    var tr = td.closest('table').rows;
+                    var row = td.parentElement;
+                    var index = Array.prototype.indexOf.call(row.cells, td);;
+                    for (var j = 0; j < tr.length; j++) {
+                        if (isafter) {
+                            var cell = tr[j].insertCell(index + 1);
+                            cell.innerHTML = '<br>' 
+                        }                            
+                        else {
+                            var cell = tr[j].insertCell(index);
+                            cell.innerHTML = '<br>'
+                        }           
+                    }
+                }
+                HidePopup();
+            }
+            else {
+                HidePopup();
+                $('.selected-td').removeClass('selected-td');
+            }
+        }, false);
+
+        function HidePopup() {
+            var items = document.getElementsByClassName('edit-popup');
+            for (var i = 0; i < items.length; i++) {
+                items[i].style.display = 'none';
+            }
+        }
+
+        function createTD(tr) {
+            var content = '<tr>';
+            var len = tr.getElementsByTagName('td').length;
+            for (var i = 0; i < len; i++) {
+                content += '<td><br></td>';
+            }
+            content += '</tr>';
+            return content;
         }
     </script>
 </body>
